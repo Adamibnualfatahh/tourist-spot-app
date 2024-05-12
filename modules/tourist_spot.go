@@ -5,6 +5,10 @@ import (
 	"os"
 )
 
+func SetLoggedInStatus(status bool) {
+	isLoggedIn = status
+}
+
 func MainMenu() {
 	fmt.Println("=== Selamat Datang di Aplikasi Tempat Wisata ===")
 	fmt.Println("1. Daftar")
@@ -12,6 +16,10 @@ func MainMenu() {
 	fmt.Println("3. Cari Tempat Wisata")
 	fmt.Println("4. Lihat Semua Tempat Wisata")
 	fmt.Println("5. Keluar")
+
+	if isLoggedIn {
+		fmt.Println("6. Admin")
+	}
 
 	var choice int
 	fmt.Print("Masukkan pilihan Anda: ")
@@ -29,6 +37,13 @@ func MainMenu() {
 	case 5:
 		fmt.Println("Keluar dari program.")
 		os.Exit(0)
+	case 6:
+		if isLoggedIn {
+			fmt.Println("Anda memilih Admin.")
+			AdminMenu()
+		} else {
+			fmt.Println("Pilihan tidak valid. Mohon masukkan opsi yang benar.")
+		}
 	default:
 		fmt.Println("Pilihan tidak valid. Mohon masukkan opsi yang benar.")
 	}

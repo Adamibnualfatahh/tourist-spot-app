@@ -7,7 +7,16 @@ import (
 	"strings"
 )
 
-var userDB = make(map[string]string)
+var (
+	UserDB     = make(map[string]User)
+	isLoggedIn bool
+)
+
+type User struct {
+	Name     string
+	Email    string
+	Password string
+}
 
 func RegisterUser() {
 	fmt.Println("=== Daftar Pengguna Baru ===")
@@ -25,7 +34,8 @@ func RegisterUser() {
 	password, _ := reader.ReadString('\n')
 	password = strings.TrimSpace(password)
 
-	userDB[email] = password
+	newUser := User{Name: name, Email: email, Password: password}
+	UserDB[email] = newUser
 
 	fmt.Println("Pengguna baru berhasil didaftarkan!")
 }
@@ -46,21 +56,21 @@ func LoginUser() {
 
 	if isLoggedIn {
 		fmt.Println("Selamat datang, " + name + "!")
+		SetLoggedInStatus(true)
 	} else {
 		fmt.Println("Email atau kata sandi salah. Silakan coba lagi.")
-
 	}
 }
 
 func ValidateLogin(email, password string) (bool, string) {
-	savedPassword, ok := userDB[email]
+	user, ok := UserDB[email]
 	if !ok {
 		return false, ""
 	}
 
-	if savedPassword != password {
+	if user.Password != password {
 		return false, ""
 	}
 
-	return true, email
+	return true, user.Name
 }

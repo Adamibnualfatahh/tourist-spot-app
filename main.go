@@ -1,6 +1,9 @@
 package main
 
-import "touristSpotApp/modules"
+import (
+	"touristSpotApp/modules"
+	_ "touristSpotApp/seeds"
+)
 
 func main() {
 	for {
