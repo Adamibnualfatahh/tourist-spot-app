@@ -3,6 +3,7 @@ package modules
 import "fmt"
 
 func AdminMenu() {
+	clearScreen()
 	fmt.Println("=== Menu Admin ===")
 	fmt.Println("1. Lihat Semua User")
 	fmt.Println("2. Tambah Tempat Pariwisata")

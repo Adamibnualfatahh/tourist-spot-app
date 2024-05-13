@@ -3,6 +3,8 @@ package modules
 import (
 	"fmt"
 	"os"
+	"os/exec"
+	"runtime"
 )
 
 func SetLoggedInStatus(status bool) {
@@ -10,6 +12,7 @@ func SetLoggedInStatus(status bool) {
 }
 
 func MainMenu() {
+	clearScreen()
 	fmt.Println("=== Selamat Datang di Aplikasi Tempat Wisata ===")
 	fmt.Println("1. Daftar")
 	fmt.Println("2. Masuk")
@@ -47,4 +50,17 @@ func MainMenu() {
 	default:
 		fmt.Println("Pilihan tidak valid. Mohon masukkan opsi yang benar.")
 	}
+}
+
+func clearScreen() {
+	var cmd *exec.Cmd
+
+	if runtime.GOOS == "windows" {
+		cmd = exec.Command("cmd", "/c", "cls") // wind
+	} else {
+		cmd = exec.Command("clear") // unix
+	}
+
+	cmd.Stdout = os.Stdout
+	cmd.Run()
 }
