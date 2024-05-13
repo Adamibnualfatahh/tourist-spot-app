@@ -9,8 +9,8 @@ func UserList() {
 		fmt.Println("Belum ada pengguna yang terdaftar.")
 	} else {
 		fmt.Println("Daftar Pengguna:")
-		for email := range UserDB {
-			fmt.Println("- ", email)
+		for _, user := range UserDB {
+			fmt.Printf("- %d %s\n", user.Id, user.Email)
 		}
 	}
 

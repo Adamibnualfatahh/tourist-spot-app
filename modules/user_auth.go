@@ -10,12 +10,20 @@ import (
 var (
 	UserDB     = make(map[string]User)
 	isLoggedIn bool
+	userId     = 0
 )
 
 type User struct {
+	Id       int
 	Name     string
 	Email    string
 	Password string
+}
+
+func SetUserId(id int) {
+	if id > userId {
+		userId = id
+	}
 }
 
 func RegisterUser() {
@@ -34,7 +42,8 @@ func RegisterUser() {
 	password, _ := reader.ReadString('\n')
 	password = strings.TrimSpace(password)
 
-	newUser := User{Name: name, Email: email, Password: password}
+	userId++
+	newUser := User{Id: userId, Name: name, Email: email, Password: password}
 	UserDB[email] = newUser
 
 	fmt.Println("Pengguna baru berhasil didaftarkan!")
