@@ -7,6 +7,19 @@ import (
 	"runtime"
 )
 
+var (
+	FavoriteDB    = make(map[int]Favorite)
+	touristSpotId = 0
+)
+
+type TouristSpot struct {
+	Id          int
+	Name        string
+	Location    string
+	Category    string
+	Description string
+}
+
 func SetLoggedInStatus(status bool) {
 	isLoggedIn = status
 }
@@ -36,7 +49,7 @@ func MainMenu() {
 	case 3:
 		fmt.Println("Anda memilih Cari Tempat Wisata.")
 	case 4:
-		fmt.Println("Anda memilih Lihat Semua Tempat Wisata.")
+		GetAllTouristSpots()
 	case 5:
 		fmt.Println("Keluar dari program.")
 		os.Exit(0)
@@ -63,4 +76,21 @@ func clearScreen() {
 
 	cmd.Stdout = os.Stdout
 	cmd.Run()
+}
+
+func SetTouristSpotId(id int) {
+	if id > touristSpotId {
+		touristSpotId = id
+	}
+}
+
+func GetAllTouristSpots() {
+	for _, touristSpot := range TouristSpotDB {
+		fmt.Println("ID:", touristSpot.Id)
+		fmt.Println("Nama:", touristSpot.Name)
+		fmt.Println("Lokasi:", touristSpot.Location)
+		fmt.Println("Kategori:", touristSpot.Category)
+		fmt.Println("Deskripsi:", touristSpot.Description)
+		fmt.Println()
+	}
 }
