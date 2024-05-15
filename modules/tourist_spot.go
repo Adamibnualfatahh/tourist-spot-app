@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/exec"
 	"runtime"
+	"sort"
 )
 
 var (
@@ -85,12 +86,38 @@ func SetTouristSpotId(id int) {
 }
 
 func GetAllTouristSpots() {
-	for _, touristSpot := range TouristSpotDB {
+	ids := make([]int, 0, len(TouristSpotDB))
+
+	for id := range TouristSpotDB {
+		ids = append(ids, id)
+	}
+
+	sort.Ints(ids)
+
+	for _, id := range ids {
+		touristSpot := TouristSpotDB[id]
 		fmt.Println("ID:", touristSpot.Id)
 		fmt.Println("Nama:", touristSpot.Name)
 		fmt.Println("Lokasi:", touristSpot.Location)
 		fmt.Println("Kategori:", touristSpot.Category)
 		fmt.Println("Deskripsi:", touristSpot.Description)
+
+		fmt.Println("Wahana:")
+		for _, attraction := range AttractionDB {
+			if attraction.TouristSpotId == touristSpot.Id {
+				fmt.Println("  - Nama Atraksi:", attraction.Name)
+				fmt.Println("    Deskripsi:", attraction.Description)
+			}
+		}
+
+		fmt.Println("Fasilitas:")
+		for _, facility := range FacilityDB {
+			if facility.TouristSpotId == touristSpot.Id {
+				fmt.Println("  - Nama Fasilitas:", facility.Name)
+				fmt.Println("    Deskripsi:", facility.Description)
+			}
+		}
+
 		fmt.Println()
 	}
 }
