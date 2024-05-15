@@ -23,10 +23,6 @@ type TouristSpot struct {
 	Description string
 }
 
-func SetLoggedInStatus(status bool) {
-	isLoggedIn = status
-}
-
 func MainMenu() {
 	clearScreen()
 	fmt.Println("=== Selamat Datang di Aplikasi Tempat Wisata ===")
@@ -98,6 +94,7 @@ func GetAllTouristSpots() {
 
 	for _, id := range ids {
 		touristSpot := TouristSpotDB[id]
+		fmt.Println("=========================================")
 		fmt.Println("ID:", touristSpot.Id)
 		fmt.Println("Nama:", touristSpot.Name)
 		fmt.Println("Lokasi:", touristSpot.Location)
@@ -163,6 +160,7 @@ func SearchByName() {
 		found := false
 		for _, touristSpot := range TouristSpotDB {
 			if strings.Contains(strings.ToLower(touristSpot.Name), strings.ToLower(query)) {
+				fmt.Println("=========================================")
 				fmt.Println("ID:", touristSpot.Id)
 				fmt.Println("Nama:", touristSpot.Name)
 				fmt.Println("Lokasi:", touristSpot.Location)
@@ -206,6 +204,7 @@ func SearchByLocation() {
 		found := false
 		for _, touristSpot := range TouristSpotDB {
 			if strings.Contains(strings.ToLower(touristSpot.Location), strings.ToLower(query)) {
+				fmt.Println("=========================================")
 				fmt.Println("ID:", touristSpot.Id)
 				fmt.Println("Nama:", touristSpot.Name)
 				fmt.Println("Lokasi:", touristSpot.Location)
@@ -250,6 +249,7 @@ func SearchByAttraction() {
 		for _, attraction := range AttractionDB {
 			if strings.Contains(strings.ToLower(attraction.Name), strings.ToLower(query)) {
 				touristSpot := TouristSpotDB[attraction.TouristSpotId]
+				fmt.Println("=========================================")
 				fmt.Println("ID:", touristSpot.Id)
 				fmt.Println("Nama:", touristSpot.Name)
 				fmt.Println("Lokasi:", touristSpot.Location)
@@ -291,6 +291,7 @@ func SearchByFacility() {
 		for _, facility := range FacilityDB {
 			if strings.Contains(strings.ToLower(facility.Name), strings.ToLower(query)) {
 				touristSpot := TouristSpotDB[facility.TouristSpotId]
+				fmt.Println("=========================================")
 				fmt.Println("ID:", touristSpot.Id)
 				fmt.Println("Nama:", touristSpot.Name)
 				fmt.Println("Lokasi:", touristSpot.Location)

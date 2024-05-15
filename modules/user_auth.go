@@ -83,3 +83,7 @@ func ValidateLogin(email, password string) (bool, string) {
 
 	return true, user.Name
 }
+
+func SetLoggedInStatus(status bool) {
+	isLoggedIn = status
+}
