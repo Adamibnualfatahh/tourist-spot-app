@@ -10,7 +10,11 @@ import (
 func MainMenu() {
 	fmt.Println("=== Selamat Datang di Aplikasi Tempat Wisata ===")
 	fmt.Println("1. Daftar")
-	fmt.Println("2. Masuk")
+
+	if !isLoggedIn {
+		fmt.Println("2. Masuk")
+	}
+
 	fmt.Println("3. Cari Tempat Wisata")
 	fmt.Println("4. Lihat Semua Tempat Wisata")
 	fmt.Println("5. Keluar")
@@ -28,6 +32,10 @@ func MainMenu() {
 	case 1:
 		RegisterUser()
 	case 2:
+		if isLoggedIn {
+			fmt.Println("Anda sudah masuk.")
+			break
+		}
 		LoginUser()
 	case 3:
 		SearchTouristSpots()
