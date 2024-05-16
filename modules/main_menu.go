@@ -17,6 +17,7 @@ func MainMenu() {
 
 	if isLoggedIn {
 		fmt.Println("6. Admin")
+		fmt.Println("7. Tempat Wisata Favorit")
 	}
 
 	var choice int
@@ -39,6 +40,13 @@ func MainMenu() {
 		if isLoggedIn {
 			fmt.Println("Anda memilih Admin.")
 			AdminMenu()
+		} else {
+			fmt.Println("Pilihan tidak valid. Mohon masukkan opsi yang benar.")
+		}
+	case 7:
+		if isLoggedIn {
+			fmt.Println("Anda memilih Tempat Wisata Favorit.")
+			FavoriteMenu()
 		} else {
 			fmt.Println("Pilihan tidak valid. Mohon masukkan opsi yang benar.")
 		}

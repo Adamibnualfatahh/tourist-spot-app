@@ -8,9 +8,10 @@ import (
 )
 
 var (
-	UserDB     = make(map[string]User)
-	isLoggedIn bool
-	userId     = 0
+	UserDB      = make(map[string]User)
+	isLoggedIn  bool
+	userId      = 0
+	CurrentUser int
 )
 
 type User struct {
@@ -86,4 +87,8 @@ func ValidateLogin(email, password string) (bool, string) {
 
 func SetLoggedInStatus(status bool) {
 	isLoggedIn = status
+}
+
+func SetCurrentUser(email string) {
+	CurrentUser = UserDB[email].Id
 }
