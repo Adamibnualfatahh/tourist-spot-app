@@ -4,8 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"os/exec"
-	"runtime"
 	"sort"
 	"strings"
 )
@@ -21,60 +19,6 @@ type TouristSpot struct {
 	Location    string
 	Category    string
 	Description string
-}
-
-func MainMenu() {
-	clearScreen()
-	fmt.Println("=== Selamat Datang di Aplikasi Tempat Wisata ===")
-	fmt.Println("1. Daftar")
-	fmt.Println("2. Masuk")
-	fmt.Println("3. Cari Tempat Wisata")
-	fmt.Println("4. Lihat Semua Tempat Wisata")
-	fmt.Println("5. Keluar")
-
-	if isLoggedIn {
-		fmt.Println("6. Admin")
-	}
-
-	var choice int
-	fmt.Print("Masukkan pilihan Anda: ")
-	fmt.Scanln(&choice)
-
-	switch choice {
-	case 1:
-		RegisterUser()
-	case 2:
-		LoginUser()
-	case 3:
-		SearchTouristSpots()
-	case 4:
-		GetAllTouristSpots()
-	case 5:
-		fmt.Println("Keluar dari program.")
-		os.Exit(0)
-	case 6:
-		if isLoggedIn {
-			fmt.Println("Anda memilih Admin.")
-			AdminMenu()
-		} else {
-			fmt.Println("Pilihan tidak valid. Mohon masukkan opsi yang benar.")
-		}
-	default:
-		fmt.Println("Pilihan tidak valid. Mohon masukkan opsi yang benar.")
-	}
-}
-
-func clearScreen() {
-	var cmd *exec.Cmd
-
-	if runtime.GOOS == "windows" {
-		cmd = exec.Command("cmd", "/c", "cls") // wind
-	} else {
-		cmd = exec.Command("clear") // unix
-	}
-
-	cmd.Stdout = os.Stdout
-	cmd.Run()
 }
 
 func SetTouristSpotId(id int) {
@@ -321,4 +265,78 @@ func SearchByFacility() {
 			fmt.Println("Tempat wisata dengan fasilitas tersebut tidak ditemukan.")
 		}
 	}
+}
+
+func CreateTouristSpot() {
+	reader := bufio.NewReader(os.Stdin)
+	fmt.Print("Masukkan nama tempat wisata: ")
+	name, _ := reader.ReadString('\n')
+	name = strings.TrimSpace(name)
+
+	fmt.Print("Masukkan lokasi tempat wisata: ")
+	location, _ := reader.ReadString('\n')
+	location = strings.TrimSpace(location)
+
+	fmt.Print("Masukkan kategori tempat wisata: ")
+	category, _ := reader.ReadString('\n')
+	category = strings.TrimSpace(category)
+
+	fmt.Print("Masukkan deskripsi tempat wisata: ")
+	description, _ := reader.ReadString('\n')
+	description = strings.TrimSpace(description)
+
+	touristSpotId++
+	newTouristSpot := TouristSpot{Id: touristSpotId, Name: name, Location: location, Category: category, Description: description}
+	TouristSpotDB[touristSpotId] = newTouristSpot
+
+	fmt.Println("Tempat wisata baru berhasil ditambahkan!")
+}
+
+func UpdateTouristSpot() {
+	fmt.Print("Masukkan ID tempat wisata yang ingin diubah: ")
+	var id int
+	fmt.Scanln(&id)
+
+	_, ok := TouristSpotDB[id]
+	if !ok {
+		fmt.Println("Tempat wisata dengan ID tersebut tidak ditemukan.")
+		return
+	}
+
+	reader := bufio.NewReader(os.Stdin)
+	fmt.Print("Masukkan nama tempat wisata: ")
+	name, _ := reader.ReadString('\n')
+	name = strings.TrimSpace(name)
+
+	fmt.Print("Masukkan lokasi tempat wisata: ")
+	location, _ := reader.ReadString('\n')
+	location = strings.TrimSpace(location)
+
+	fmt.Print("Masukkan kategori tempat wisata: ")
+	category, _ := reader.ReadString('\n')
+	category = strings.TrimSpace(category)
+
+	fmt.Print("Masukkan deskripsi tempat wisata: ")
+	description, _ := reader.ReadString('\n')
+	description = strings.TrimSpace(description)
+
+	newTouristSpot := TouristSpot{Id: id, Name: name, Location: location, Category: category, Description: description}
+	TouristSpotDB[id] = newTouristSpot
+
+	fmt.Println("Tempat wisata berhasil diubah!")
+}
+
+func DeleteTouristSpot() {
+	fmt.Print("Masukkan ID tempat wisata yang ingin dihapus: ")
+	var id int
+	fmt.Scanln(&id)
+
+	_, ok := TouristSpotDB[id]
+	if !ok {
+		fmt.Println("Tempat wisata dengan ID tersebut tidak ditemukan.")
+		return
+	}
+
+	delete(TouristSpotDB, id)
+	fmt.Println("Tempat wisata berhasil dihapus!")
 }
